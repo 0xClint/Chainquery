@@ -16,7 +16,7 @@ export default function Home() {
     setLoader(true);
     const res = await readQuestionTableFunc();
     console.log(res);
-    setData(res);
+    setData(res.slice(0, 3));
     setLoader(false);
   };
 
@@ -29,7 +29,12 @@ export default function Home() {
       <Header />
       <div className="hero bg-white min-h-[90vh]">
         <div className="hero-content flex-col justify-between lg:flex-row-reverse">
-          <Image src={"/query.png"} width={300} height={300} className="border border-black rounded-md"/>
+          <Image
+            src={"/query.png"}
+            width={300}
+            height={300}
+            className="border border-black rounded-md"
+          />
           <div className="w-1/2 text-black">
             <h1 className="text-5xl font-bold">Web3 Q&A with Bounty Rewards</h1>
             <p className="py-6">

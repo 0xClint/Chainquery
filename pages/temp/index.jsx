@@ -12,9 +12,12 @@ import {
 } from "@/libs/contractFunctionCall";
 import { Database } from "@tableland/sdk";
 import {
+  addToAiTableFn,
   readQuestionTableFunc,
   readUserQuestionFunc,
+  searchQuestionTableFunc,
 } from "@/libs/TablelandFnCall";
+import { uploadData } from "@/libs/lighthouse";
 
 const contractTxId = process.env.NEXT_PUBLIC_QUESTION_CONTRACT_ID;
 
@@ -43,14 +46,29 @@ const Temp = () => {
     }
   };
 
+  const fetchData = async () => {
+    try {
+      const response = await fetch(
+        "https://gateway.lighthouse.storage/ipfs/QmddchiYMQGZYLZf86jhyhkxRqrGfpBNr53b4oiV76q6aq"
+      );
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      const data = console.log(response);
+    } catch (error) {
+      console.error("There was a problem with the fetch operation:", error);
+    }
+  };
+
   const getData = async () => {
     // console.log(await readQuestionTableFunc());
-    await readUserQuestionFunc("0x062A88EC102154D69aF12ecA850216063D8e65a7");
+    // await readUserQuestionFunc("0x062A88EC102154D69aF12ecA850216063D8e65a7");
+    await addToAiTableFn();
   };
   return (
     <div className="flex gap-5">
       <button onClick={() => getData()}> get data</button>
-      <button onClick={() => addData()}> add data</button>
+      <button onClick={() => fetchData()}> fetch Data</button>
       <button onClick={() => updateData()}> update data</button>
       <button onClick={() => deleteData()}> delete data</button>
       <button onClick={() => authenticate()}> authenticate</button>

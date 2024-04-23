@@ -1,6 +1,10 @@
 import { Header } from "@/components";
+import { addToAiTableFn, readAiTableFunc } from "@/libs/TablelandFnCall";
+import { random } from "@/libs/constant";
+import { makeFileObjects, uploadFile } from "@/libs/lighthouse";
 import axios from "axios";
-import React, { useState } from "react";
+import { ethers } from "ethers/lib";
+import React, { useEffect, useState } from "react";
 import { LuUpload } from "react-icons/lu";
 
 const dummydata = [
@@ -9,6 +13,12 @@ const dummydata = [
     question: "What is Ethereum?",
     answer:
       "Ethereum is a decentralized platform that enables developers to build and deploy smart contracts and decentralized applications (DApps). It uses blockchain technology to create and execute smart contracts, which are self-executing contracts with the terms of the agreement directly written into code.",
+  },
+  {
+    id: 2,
+    question: "What is FileCoin?",
+    answer:
+      "Filecoin is a decentralized storage network designed to store humanity's most important information. It allows users to buy and sell unused storage space. Miners in the Filecoin network earn Filecoin tokens by providing storage to clients. This system aims to create a more efficient and secure way to store data compared to traditional cloud storage providers.",
   },
 ];
 
@@ -31,6 +41,12 @@ const AskAI = () => {
         );
         const res = response.data.response.answer;
         setData([...data, { question: prompt, answer: res }]);
+        // const cid = await uploadFile(await makeFileObjects(data));
+        // const provider = new ethers.providers.Web3Provider(window.ethereum);
+        // await provider.send("eth_requestAccounts", []);
+        // const signer = await provider.getSigner();
+        // const account = await signer.getAddress();
+        // await addToAiTableFn(signer, random(), account, cid);
         setPrompt("");
         console.log();
       } catch (error) {
@@ -40,6 +56,18 @@ const AskAI = () => {
     }
     setLoader(false);
   }
+
+  const readAIData = async () => {
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    await provider.send("eth_requestAccounts", []);
+    const signer = await provider.getSigner();
+    const account = await signer.getAddress();
+    await readAiTableFunc(account);
+  };
+
+  useEffect(() => {
+    readAIData();
+  }, []);
   return (
     <div>
       <Header />

@@ -12,6 +12,7 @@
     "@chakra-ui/react": "^2.8.0",
     "@emotion/react": "^11",
     "@emotion/styled": "^11",
+    "@lighthouse-web3/sdk": "^0.3.2",
     "@tableland/sdk": "^6.0.0",
     "@tiptap/extension-underline": "^2.2.4",
     "@tiptap/pm": "^2.2.4",
