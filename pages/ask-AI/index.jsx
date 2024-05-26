@@ -30,20 +30,13 @@ const AskAI = () => {
 
   async function makePostRequestToServer() {
     setLoader(true);
-
-    const data = {
-      query: prompt,
-    };
     if (prompt) {
       try {
         console.log(prompt);
         const response = await axios.post(
-          "https://ai-backend-golang.onrender.com/",
-          // "https://learnweb3-backend.onrender.com/api/chatbot",
-          // prompt,
-          data,
+          "https://learnweb3-backend.onrender.com/api/chatbot",
           {
-            "Content-Type": "application/json",
+            prompt,
           }
         );
         const res = response.data.response.answer;
